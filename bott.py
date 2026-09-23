@@ -1,3 +1,25 @@
+import os
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+# Render port tekshiruvidan o'tishi uchun soxta server
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot ishlayapti!")
+
+def run_fake_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
+    server.serve_forever()
+
+# Veb-serverni orqa fonda ishga tushirish
+threading.Thread(target=run_fake_server, daemon=True).start()
+
+# Shu yerdan pastda sizning botingiz kodi davom etadi:
+# ...
+# bot.infinity_polling()
 import telebot
 from telebot import types
 import requests
