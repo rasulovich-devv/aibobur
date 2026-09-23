@@ -1,2 +1,4 @@
-streamlit
-pandas
+APScheduler
+pyTelegramBotAPI
+python-dotenv
+requests
